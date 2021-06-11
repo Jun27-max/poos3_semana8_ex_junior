@@ -3,50 +3,36 @@ package poos3_semana8_ex_junior.entities;
 
 public class Produto {
 
-	private Integer codigo;
+	private int codigo;
 	private String nome;
-	private Integer unidEstoque;
+	private int unidEstoque;
 
-	public Produto(Integer codigo, String nome, Integer unidEstoque) {
+	public Produto(int codigo, String nome, int unidEstoque) {
 		this.codigo = codigo;
 		this.nome = nome;
 		this.unidEstoque = unidEstoque;
 	}
 
-	public Produto() {
-
-	}
-
-	public Integer getCodigo() {
+	public int getCodigo() {
 		return codigo;
-	}
-
-	public void setCodigo(Integer codigo) {
-		this.codigo = codigo;
 	}
 
 	public String getNome() {
 		return nome;
 	}
 
-	public void setNome(String nome) {
-		this.nome = nome;
-	}
-
-	public Integer getUnidEstoque() {
+	public int getUnidEstoque() {
 		return unidEstoque;
 	}
 
-	public void setUnidEstoque(Integer unidEstoque) {
-		this.unidEstoque = unidEstoque;
+	
+	public boolean vender(int quantidade) {
+		if(unidEstoque >= quantidade) {
+			unidEstoque -= quantidade;
+			return true;
+		}
+		return false;
 	}
-	
-	
-	@Override
-	public String toString() {
-		return "Produto [codigo=" + codigo + ", nome=" + nome + ", unidEstoque=" + unidEstoque + "]";
-	}
-	
 	
 	
 	

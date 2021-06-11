@@ -6,7 +6,7 @@ import poos3_semana8_ex_junior.entities.Produto;
 public class GerenciadorProduto {
 
 	private Produto[] produtos;
-	private int cont = 0;
+	private int cont;
 	private Buscador busca;
 
 	public GerenciadorProduto(Buscador buscador) {
@@ -16,22 +16,23 @@ public class GerenciadorProduto {
 	
 	
 
-	public boolean addProdutos(Produto produto) {
+	public void addProdutos(Produto produto) {
 		Produto p = busca.buscar(aumentaEspaco(), produto.getCodigo());
-		if (p == null) {
-			produtos[cont++] = produto;
-			return true;
+		if (p != null) {
+			System.out.println("Erro: produto encontrado");
 		}
-
-		return false;
+		else {
+			produtos[cont++] = produto;
+			System.out.println("Produto inserido");
+			
+		}
 
 	}
 
-	public boolean venderProduto(Produto produto) {
-		Produto p = busca.buscar(aumentaEspaco(), produto.getCodigo());
-		if (p == null) {
-			produtos[cont--] = produto;
-			return true;
+	public boolean venderProduto(int codigo, int quantidade) {
+		Produto p = busca.buscar(aumentaEspaco(), codigo);
+		if (p != null) {
+			return p.vender(quantidade);
 		}
 
 		return false;
@@ -39,26 +40,21 @@ public class GerenciadorProduto {
 
 	@Override
 	public String toString() {
-		if (this.cont == 0) {
-			return "[]";
-		}
-
 		StringBuilder builder = new StringBuilder();
-		builder.append("[");
-
-		for (int i = 0; i < this.cont - 1; i++) {
-			builder.append(this.produtos[i]);
-			builder.append(",");
-
+		for(int i = 0; i < cont; i++) {
+			Produto p = produtos[i];
+			builder.append("Nome:")
+				.append(p.getNome())
+				.append(" Estoque:")
+				.append(p.getUnidEstoque())
+				.append("\n");
 		}
-		builder.append(this.produtos[this.cont - 1]);
-		builder.append("]");
-
 		return builder.toString();
 	}
+	
 
 	private Produto[] aumentaEspaco() {
-		Produto[] nuevoArray = new Produto[cont * 2];
+		Produto[] nuevoArray = new Produto[cont];
 		System.arraycopy(produtos, 0, nuevoArray, 0, cont);
 
 		return nuevoArray;
